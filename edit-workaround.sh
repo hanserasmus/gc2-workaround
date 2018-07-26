@@ -71,7 +71,6 @@ then
 		fi
 	# Execute this part if the CA is idle and not ingesting
 	else
-		echo "Second $status" >> /var/log/galicaster/workaround-script.log
 		# Delete the previous version of the lists file
 		rm -rf /home/galicaster/broken-manifest.txt
 
