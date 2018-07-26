@@ -3,7 +3,8 @@ Quick repo to help with workaround to the broken manifest.xml bug
 
 ##  Things to know before using this:
 
-I used one special package called *jq* in my shell script's curl statement. This can be downloaded from [here](https://stedolan.github.io/jq/)
+I used one special package called *jq* in my shell script's curl statement. This can be downloaded from [here](https://stedolan.github.io/jq/).
+
 I don't see myself as a coder at all. So anyone can improve on this in any way they want. I have tested this for three scenarios basically:
   - If the CA is capturing, exit and do not do anything
   - If the CA is idle, but ingesting and has not finalised the ingest yet, exit and do nothing.
