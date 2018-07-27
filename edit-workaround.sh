@@ -30,7 +30,7 @@ then
 		mp_ingesting=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Ingesting MP" | awk -F' ' '{ print $8 }'`
 		ingested=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Finalized Ingest for MP" | awk -F' ' '{ print $6 }'`
 		mp_ingested=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Finalized Ingest for MP" | awk -F' ' '{ print $10 }'`
-		if [ "$ingested" = "Finalized" ] && [ "$mp_ingesting" == "$mp_ingested" ];
+		if [ "$ingested" = "Finalized" ] && [ $mp_ingesting = $mp_ingested ];
 		then
 			# Delete the previous version of the lists file
 			rm -rf /home/galicaster/broken-manifest.txt
@@ -57,7 +57,7 @@ then
 				done < /home/galicaster/broken-manifest.txt
 				# Now restart GC so that it will remove any remnants of broken wrong icals from memory
 				/bin/sh /home/galicaster/restart_gc.sh
-				echo "$(date) - Broken mediapackages were fixed and Galicaster was restarted." >> /var/log/galicaster/workaround-script.log
+				echo "$(date) - Broken mediapackages were fixed and Galicaster was restarted after an ingest." >> /var/log/galicaster/workaround-script.log
 				exit 0
 
 			else
@@ -98,7 +98,7 @@ then
 			echo "$(date) - Broken mediapackages were fixed and Galicaster was restarted." >> /var/log/galicaster/workaround-script.log
 			exit 0
 		fi
-		echo "$(date) - CA is idle and not ingesting, but the file 'broken-manifests.txt' was empty, so we did not have to do anything" >> /var/log/galicaster/workaround-script.log
+		echo "$(date) - Do not fear, all is well" >> /var/log/galicaster/workaround-script.log
 		exit 0
 	
 
