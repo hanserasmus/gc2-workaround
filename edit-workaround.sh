@@ -23,14 +23,13 @@ then
 	# Check for the string "Ingesting MP" in the last 1000 lines of the log file
 	
 	#echo "$(date) - We have entered elif" >> /var/log/galicaster/workaround-script.log
-	is_ingesting=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -Fq "Ingesting MP" | awk -F' ' '{ print $6 }'`
-	
+	is_ingesting=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Ingesting MP" | awk -F' ' '{ print $6 }'`
 	if [ "$is_ingesting" = "Ingesting" ]; # If you find a package that was ingesting, check whether that package has finished ingesting.
 	then
 		# Start by saving the MP ID if an ingest is ongoing
-		mp_ingesting=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -Fq "Ingesting MP" | awk -F' ' '{ print $8 }'`
-		ingested=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -Fq "Finalized Ingest for MP" | awk -F' ' '{ print $6 }'`
-		mp_ingested=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -Fq "Finalized Ingest for MP" | awk -F' ' '{ print $6 }'`
+		mp_ingesting=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Ingesting MP" | awk -F' ' '{ print $8 }'`
+		ingested=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Finalized Ingest for MP" | awk -F' ' '{ print $6 }'`
+		mp_ingested=`/usr/bin/tail -n1000 /var/log/galicaster/galicaster.log | grep -F "Finalized Ingest for MP" | awk -F' ' '{ print $10 }'`
 		if [ "$ingested" = "Finalized" ] && [ "$mp_ingesting" == "$mp_ingested" ];
 		then
 			# Delete the previous version of the lists file
